@@ -245,12 +245,15 @@ export default function DecisionIntelligence() {
         decision_question: decisionQuestion,
       }
 
-      const primaryUrl = process.env.REACT_APP_N8N_REVUE_URL
+      const envUrl = process.env.REACT_APP_N8N_REVUE_URL
       const fallbackUrl = '/api/revue'
 
-      if (!primaryUrl && import.meta.env.PROD) {
+      if (!envUrl && import.meta.env.PROD) {
         throw new Error('Decision engine is not configured. Please set REACT_APP_N8N_REVUE_URL.')
       }
+
+      // Ensure TypeScript sees a concrete string for fetch
+      const primaryUrl: string = envUrl ?? fallbackUrl
 
       // Create a timeout promise that rejects after 60 seconds
       const timeoutPromise = new Promise<never>((_, reject) => {
