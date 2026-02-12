@@ -10,13 +10,13 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     define: {
       "process.env.REACT_APP_N8N_CHATBOT_URL": JSON.stringify(
-        env.REACT_APP_N8N_CHATBOT_URL,
+        env.REACT_APP_N8N_CHATBOT_URL || "https://sydaslam.app.n8n.cloud/webhook/chatbot-webhook",
       ),
       "process.env.REACT_APP_N8N_REVUE_URL": JSON.stringify(
-        env.REACT_APP_N8N_REVUE_URL,
+        env.REACT_APP_N8N_REVUE_URL || "https://sydaslam.app.n8n.cloud/webhook/revue",
       ),
       "process.env.REACT_APP_N8N_NEWSLETTER_URL": JSON.stringify(
-        env.REACT_APP_N8N_NEWSLETTER_URL,
+        env.REACT_APP_N8N_NEWSLETTER_URL || "https://sydaslam.app.n8n.cloud/webhook/newsletter-subscribe",
       ),
     },
     server: {
