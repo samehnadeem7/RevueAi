@@ -18,11 +18,11 @@ This project is built with Vite and React. It is configured for easy deployment 
 5. **Configure Environment Variables**:
    Expand the "Environment Variables" section and add the following keys with your specific values (you can find these in your local `.env` file or n8n dashboard):
 
-   | Key                            | Value                                                              |
-   | ------------------------------ | ------------------------------------------------------------------ |
-   | `REACT_APP_N8N_CHATBOT_URL`    | `https://sydaslam.app.n8n.cloud/webhook/chatbot-webhook`           |
-   | `REACT_APP_N8N_REVUE_URL`      | `https://sydaslam.app.n8n.cloud/webhook/revue`                     |
-   | `REACT_APP_N8N_NEWSLETTER_URL` | _(Leave empty or add your newsletter webhook URL if you have one)_ |
+   | Key                            | Value                                                         |
+   | ------------------------------ | ------------------------------------------------------------- |
+   | `REACT_APP_N8N_CHATBOT_URL`    | `https://sydaslam.app.n8n.cloud/webhook/chatbot-webhook`      |
+   | `REACT_APP_N8N_REVUE_URL`      | `https://sydaslam.app.n8n.cloud/webhook/revue`                |
+   | `REACT_APP_N8N_NEWSLETTER_URL` | `https://sydaslam.app.n8n.cloud/webhook/newsletter-subscribe` |
 
 6. Click **Deploy**.
 
