@@ -29,6 +29,12 @@ export default function ChatbotWidget() {
   const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const lastRequestRef = useRef<number | null>(null)
+  const requestTimesRef = useRef<number[]>([])
+
+  const CHAT_COOLDOWN_MS = 5000 // 5 seconds between messages
+  const CHAT_WINDOW_MS = 60_000 // 1 minute window
+  const CHAT_MAX_PER_WINDOW = 20 // max 20 messages per minute
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -44,6 +50,25 @@ export default function ChatbotWidget() {
   async function handleSend(e: React.FormEvent) {
     e.preventDefault()
     if (!inputText.trim() || isLoading) return
+
+    const now = Date.now()
+    // Enforce simple per-user rate limiting on the client
+    if (lastRequestRef.current && now - lastRequestRef.current < CHAT_COOLDOWN_MS) {
+      setError('Please wait a few seconds before sending another message.')
+      return
+    }
+
+    // Sliding window of recent requests
+    requestTimesRef.current = requestTimesRef.current.filter(
+      (ts) => now - ts < CHAT_WINDOW_MS,
+    )
+    if (requestTimesRef.current.length >= CHAT_MAX_PER_WINDOW) {
+      setError('You have reached the message limit for this minute. Please wait a bit.')
+      return
+    }
+
+    lastRequestRef.current = now
+    requestTimesRef.current.push(now)
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -62,7 +87,10 @@ export default function ChatbotWidget() {
         message: userMessage.text,
       }
 
-      const webhookUrl = process.env.REACT_APP_N8N_CHATBOT_URL || 'https://gnosiss.app.n8n.cloud/webhook/chatbot-webhook'
+      const webhookUrl = process.env.REACT_APP_N8N_CHATBOT_URL
+      if (!webhookUrl) {
+        throw new Error('Chatbot service is not configured. Please set REACT_APP_N8N_CHATBOT_URL.')
+      }
 
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => {

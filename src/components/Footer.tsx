@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function Footer() {
@@ -6,6 +6,11 @@ export default function Footer() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success'>('idle')
+  const [subscribeError, setSubscribeError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const lastSubscribeRef = useRef<number | null>(null)
+  const SUBSCRIBE_COOLDOWN_MS = 30_000 // 30 seconds between attempts
 
   const handleScrollClick = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -29,15 +34,32 @@ export default function Footer() {
     e.preventDefault()
     if (!email) return
 
+    const now = Date.now()
+    if (lastSubscribeRef.current && now - lastSubscribeRef.current < SUBSCRIBE_COOLDOWN_MS) {
+      setSubscribeError('Please wait a few seconds before subscribing again.')
+      return
+    }
+
+    const newsletterUrl = process.env.REACT_APP_N8N_NEWSLETTER_URL
+    if (!newsletterUrl) {
+      setSubscribeError('Newsletter service is not configured yet.')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubscribeError(null)
+
     try {
       // Send email to n8n webhook
-      await fetch(process.env.REACT_APP_N8N_NEWSLETTER_URL || 'https://gnosiss.app.n8n.cloud/webhook/newsletter', {
+      await fetch(newsletterUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       })
+
+      lastSubscribeRef.current = now
 
       setSubscribeStatus('success')
       setEmail('')
@@ -46,7 +68,10 @@ export default function Footer() {
       setTimeout(() => setSubscribeStatus('idle'), 3000)
     } catch (error) {
       console.error('Newsletter subscription failed:', error)
-      // Optional: Handle error state here
+      setSubscribeError('Subscription failed. Please try again in a moment.')
+    }
+    finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -144,9 +169,14 @@ export default function Footer() {
                   className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white placeholder:text-white/40 text-sm outline-none focus:border-white/30 transition-colors duration-300"
                 />
               </div>
+              {subscribeError && (
+                <div className="text-xs text-red-400">
+                  {subscribeError}
+                </div>
+              )}
               <button
                 type="submit"
-                disabled={subscribeStatus === 'success'}
+                disabled={subscribeStatus === 'success' || isSubmitting}
                 className="w-full px-6 py-3 rounded-lg bg-black/40 backdrop-blur-xl border border-white/10 text-white/80 font-semibold overflow-hidden group transition-all duration-300 hover:border-white/30"
               >
                 {subscribeStatus === 'success' ? (

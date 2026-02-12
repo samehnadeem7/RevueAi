@@ -111,6 +111,17 @@ export default function DecisionIntelligence() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
+  // Simple client-side rate limiting to reduce accidental abuse
+  const lastRequestRef = useRef<number | null>(null)
+  const requestTimesRef = useRef<number[]>([])
+
+  const DECISION_COOLDOWN_MS = 10_000 // 10 seconds between runs
+  const DECISION_WINDOW_MS = 60_000 // 1 minute window
+  const DECISION_MAX_PER_WINDOW = 20 // max 20 runs per minute
+
+  const MAX_FEEDBACK_LENGTH = 20_000 // characters
+  const MAX_DECISION_QUESTION_LENGTH = 500
+
   const canSubmit = useMemo(() => {
     return feedback.trim().length > 0 && !isLoading
   }, [feedback, isLoading])
@@ -192,6 +203,38 @@ export default function DecisionIntelligence() {
   }
 
   async function onSubmit() {
+    // Basic input size validation to avoid huge payloads
+    if (feedback.trim().length === 0) {
+      setError('Please provide some feedback before running the workflow.')
+      return
+    }
+    if (feedback.length > MAX_FEEDBACK_LENGTH) {
+      setError('Feedback is too long. Please trim it down before submitting.')
+      return
+    }
+    if (decisionQuestion.length > MAX_DECISION_QUESTION_LENGTH) {
+      setError('Decision question is too long. Please shorten it and try again.')
+      return
+    }
+
+    const now = Date.now()
+    // Enforce simple per-user rate limiting on the client
+    if (lastRequestRef.current && now - lastRequestRef.current < DECISION_COOLDOWN_MS) {
+      setError('Please wait a few seconds before running another decision.')
+      return
+    }
+
+    requestTimesRef.current = requestTimesRef.current.filter(
+      (ts) => now - ts < DECISION_WINDOW_MS,
+    )
+    if (requestTimesRef.current.length >= DECISION_MAX_PER_WINDOW) {
+      setError('You have reached the limit of decisions per minute. Please wait a bit.')
+      return
+    }
+
+    lastRequestRef.current = now
+    requestTimesRef.current.push(now)
+
     setError(null)
     setResult(null)
     setIsLoading(true)
@@ -202,8 +245,15 @@ export default function DecisionIntelligence() {
         decision_question: decisionQuestion,
       }
 
-      const primaryUrl = process.env.REACT_APP_N8N_REVUE_URL || 'https://gnosiss.app.n8n.cloud/webhook/revue'
+      const envUrl = process.env.REACT_APP_N8N_REVUE_URL
       const fallbackUrl = '/api/revue'
+
+      if (!envUrl && import.meta.env.PROD) {
+        throw new Error('Decision engine is not configured. Please set REACT_APP_N8N_REVUE_URL.')
+      }
+
+      // Ensure TypeScript sees a concrete string for fetch
+      const primaryUrl: string = envUrl ?? fallbackUrl
 
       // Create a timeout promise that rejects after 60 seconds
       const timeoutPromise = new Promise<never>((_, reject) => {
