@@ -75,11 +75,34 @@ export default function App() {
             path="/company/about"
             element={
               <InfoPage
-                title="About Us"
+                title="About Revue.Ai"
                 content={
-                  <div className="space-y-6">
-                    <p>Revue.Ai is built for the NxtWave X Open AI Hackathon 2026. Our mission is to bridge the gap between raw customer feedback and high-level business strategy.</p>
-                    <p>We believe that in the age of AI, no company should struggle to understand its users. By leveraging advanced LLMs and orchestration workflows, we turn the chaotic voice of the customer into a clear blueprint for growth.</p>
+                  <div className="space-y-8">
+                    <p>Revue.Ai is a decision intelligence platform built for modern enterprises. We turn the chaotic voice of the customer—scattered across reviews, support tickets, surveys, and feedback forms—into structured, actionable strategy.</p>
+                    <p>We believe the gap between what customers are saying and what leadership teams understand is one of the most expensive problems in business today. Our platform bridges that gap using advanced AI reasoning, multi-format data ingestion, and executive-grade reporting that speaks the language of your boardroom.</p>
+                    <p>Revue.Ai was founded by an engineering and product team obsessed with one question: <em>why does understanding your customer still require so much guesswork?</em> Our answer is a product that replaces intuition with intelligence—at scale.</p>
+
+                    <div className="pt-6 border-t border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-6">Leadership & Core Team</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                          <div className="font-semibold text-white">Sameh Nadeem</div>
+                          <div className="text-sm text-white/50">Founder & Chief Executive Officer</div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                          <div className="font-semibold text-white">Saad Khan</div>
+                          <div className="text-sm text-white/50">Co-Founder & Chief Technology Officer</div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                          <div className="font-semibold text-white">Ali</div>
+                          <div className="text-sm text-white/50">Head of AI Research & Models</div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                          <div className="font-semibold text-white">Mohammad Nithash</div>
+                          <div className="text-sm text-white/50">Lead Platform Engineer</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 }
               />

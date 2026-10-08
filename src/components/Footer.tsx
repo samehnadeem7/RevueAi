@@ -211,9 +211,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Bottom Center: Hackathon Text */}
+          {/* Bottom Center: Tagline */}
           <div className="text-center text-white/60 text-sm">
-            Built for NxtWave X Open AI Hackathon 2026, scaling to enterprise soon.
+            Revue.Ai — Transforming the voice of your customer into competitive advantage.
           </div>
         </div>
       </div>

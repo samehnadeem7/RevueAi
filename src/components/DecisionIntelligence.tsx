@@ -3,54 +3,46 @@ import { extractPdfText } from '../lib/extractPdfText'
 
 type Mode = 'paste' | 'upload'
 
-export const UNACADEMY_DEMO_DATA = {
+export const ENTERPRISE_DEMO_DATA = {
   TEXT: {
-    label: "Unacademy Feedback (Raw Text)",
-    content: `Unacademy has some of the best educators I've come across. The way complex topics are broken down makes learning feel much less intimidating.
+    label: "Customer Feedback (Raw Text)",
+    content: `The analytics module is among the best we've integrated. Complex cohort data is presented intuitively for product managers.
 
-The app crashes way too often during live classes. For a tech-first education platform, this is honestly unacceptable.
+The dashboard load times degrade significantly with accounts exceeding 10k monthly active users. This needs optimization.
 
-Compared to offline coaching, Unacademy is extremely cost-effective. You get access to multiple educators at a fraction of the price.
+Compared to enterprise alternatives like Qualtrics, Revue.Ai is exceptionally cost-effective and provides far better synthesis.
 
-Their customer support is painfully slow. I raised a ticket weeks ago and still haven't received a proper resolution.
+Ticket turnaround time from tier-1 support has been slow. Issues take several days to escalate to engineering.
 
-The structured courses and test series helped me stay consistent with my exam prep. It feels well-designed for serious aspirants.
+The automated persona clustering and risk scoring have helped our team align on roadmap features with high confidence.
 
-There's too much content and very little guidance on what to follow. Beginners can easily feel lost.
+The documentation for custom webhook payloads could be expanded with more end-to-end examples.
 
-I love the flexibility Unacademy offers. Recorded lectures make it easy to study even with a full-time job.
+We love the exportable executive PDF briefs. They save our founders 5+ hours every sprint planning meeting.
 
-The subscription feels overpriced considering many classes are repetitive or recycled from older batches.
-
-The learner community and live interactions keep me motivated. Seeing others work hard pushes me to stay disciplined.
-
-Not all educators maintain the same quality. Some classes feel rushed and poorly planned.`,
+The enterprise tier SSO setup was seamless with Okta, and permission groups worked right out of the box.`,
   },
   CSV: {
-    label: "Unacademy Dataset (CSV Format)",
+    label: "Customer Dataset (CSV Format)",
     content: `Category,Comment
-Educators,"Unacademy has some of the best educators I've come across."
-Tech,"The app crashes way too often during live classes. Unacceptable."
-Value,"Extremely cost-effective compared to offline coaching."
-Support,"Customer support is painfully slow. Tickets take weeks."
-Design,"Structured courses and test series help consistency."
-UX,"Too much content, beginners feel lost without guidance."
-Flexibility,"Recorded lectures are great for full-time workers."
-Pricing,"Subscription feels overpriced due to repetitive content."
-Community,"Live interactions and community keep me motivated."
-Quality,"Educator quality varies; some classes feel rushed."`,
+Analytics,"The analytics module is among the best we've integrated."
+Performance,"Dashboard load times degrade with accounts over 10k MAU."
+ROI,"Exceptionally cost-effective compared to Qualtrics."
+Support,"Tier-1 support turnaround times could be faster."
+Strategy,"Automated persona clustering helped align sprint roadmaps."
+Integrations,"Webhook payload docs need more TypeScript examples."
+Reporting,"Executive PDF briefs save our team hours every week."
+Security,"Seamless Okta SSO integration and granular permissions."`,
   },
   PDF: {
-    label: "Unacademy Report (PDF Extraction)",
-    content: `[INTERNAL PDF REPORT: UNACADEMY USER SENTIMENT Q1]
-Summary: High educator satisfaction (8.5/10) contrasted with low technical stability (3/10).
-Student Feedback Included:
-- Educators break down complex topics well.
-- App crashes frequently during live sessions.
-- Pricing is favorable compared to offline alternatives.
-- Support resolution times are below industry standards.
-- Beginners require better onboarding pathways.
-- Community features are a strong retention driver.`,
+    label: "Executive Report (PDF Extraction)",
+    content: `[INTERNAL REPORT: QUARTERLY CUSTOMER SENTIMENT & PRODUCT SIGNALS]
+Summary: High satisfaction on decision intelligence accuracy (9.1/10); latency concerns on large CSV uploads (6.2/10).
+Key Enterprise Signals:
+- Executives praise automated persona classification and actionable risk analysis.
+- Mid-market teams request automated Slack and Jira notifications on negative sentiment spikes.
+- Pricing structure considered competitive against legacy enterprise analytics suites.
+- Webhook pipeline stability rated at 99.9% uptime across all ingested channels.`,
   }
 }
 
@@ -144,35 +136,35 @@ export default function DecisionIntelligence() {
 
   // Sample data handlers
   function handleSamplePDF() {
-    const sampleText = UNACADEMY_DEMO_DATA.PDF.content
+    const sampleText = ENTERPRISE_DEMO_DATA.PDF.content
     setFeedback(sampleText)
     setMode('upload')
     setError(null)
     setResult(null)
 
     // Create a fake file object to simulate PDF upload
-    const fakeFile = new File([sampleText], 'unacademy_sample.pdf', { type: 'application/pdf' })
+    const fakeFile = new File([sampleText], 'enterprise_feedback_sample.pdf', { type: 'application/pdf' })
     setSelectedFile(fakeFile)
 
     setIsDropdownOpen(false)
   }
 
   function handleSampleCSV() {
-    const sampleText = UNACADEMY_DEMO_DATA.CSV.content
+    const sampleText = ENTERPRISE_DEMO_DATA.CSV.content
     setFeedback(sampleText)
     setMode('upload')
     setError(null)
     setResult(null)
 
     // Create a fake file object to simulate CSV upload
-    const fakeFile = new File([sampleText], 'unacademy_sample.csv', { type: 'text/csv' })
+    const fakeFile = new File([sampleText], 'enterprise_feedback_sample.csv', { type: 'text/csv' })
     setSelectedFile(fakeFile)
 
     setIsDropdownOpen(false)
   }
 
   function handleSampleText() {
-    const sampleText = UNACADEMY_DEMO_DATA.TEXT.content
+    const sampleText = ENTERPRISE_DEMO_DATA.TEXT.content
     setFeedback(sampleText)
     setMode('paste')
     setSelectedFile(null)
@@ -524,7 +516,7 @@ export default function DecisionIntelligence() {
           TRANSFORMING FEEDBACK INTO STRATEGY
         </h1>
         <div className="text-white/70 text-lg">
-          Paste feedback or upload CSV/PDF, ask a decision question, then generate a judge-ready recommendation.
+          Paste feedback or upload CSV/PDF, ask a decision question, then generate an executive-ready recommendation.
         </div>
       </div>
 
@@ -538,7 +530,7 @@ export default function DecisionIntelligence() {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-white/20 via-white/15 to-white/10 backdrop-blur-xl border border-white/20 text-white text-sm font-semibold transition-all duration-300 hover:from-white/25 hover:via-white/20 hover:to-white/15 shadow-lg"
               >
-                <span>Demo Trial</span>
+                <span>Sample Data</span>
                 <svg
                   className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
                   fill="none"
@@ -555,21 +547,21 @@ export default function DecisionIntelligence() {
                     onClick={handleSamplePDF}
                     className="w-full px-4 py-3 text-left text-sm text-white/90 hover:bg-white/10 transition-colors duration-200"
                   >
-                    Test Demo PDF
+                    Load Sample PDF
                   </button>
                   <button
                     type="button"
                     onClick={handleSampleCSV}
                     className="w-full px-4 py-3 text-left text-sm text-white/90 hover:bg-white/10 transition-colors duration-200 border-t border-white/10"
                   >
-                    Test Demo CSV
+                    Load Sample CSV
                   </button>
                   <button
                     type="button"
                     onClick={handleSampleText}
                     className="w-full px-4 py-3 text-left text-sm text-white/90 hover:bg-white/10 transition-colors duration-200 border-t border-white/10"
                   >
-                    Test Demo Text
+                    Load Sample Text
                   </button>
                 </div>
               )}

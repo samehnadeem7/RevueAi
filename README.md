@@ -76,9 +76,9 @@ The production build will be in the `dist` folder.
 5. Click "Get Decision" to run AI analysis
 6. Review the generated insights, personas, and recommendations
 
-## Demo Data
+## Demo
 
-Use the "Demo Trial" dropdown to load sample Unacademy feedback data for testing.
+Use the "Demo Trial" dropdown to load sample customer feedback data and explore AI-generated insights, personas, and recommendations.
 
 ## Deployment
 
@@ -86,4 +86,4 @@ The project includes a GitHub Actions workflow for automatic deployment to GitHu
 
 ## License
 
-Private project for hackathon submission.
+Proprietary. All rights reserved. © 2026 Revue.Ai.

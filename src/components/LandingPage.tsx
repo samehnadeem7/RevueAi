@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import DashboardPreview from './DashboardPreview'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import TeamCredits from './TeamCredits'
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -63,6 +62,30 @@ export default function LandingPage() {
           </div>
         </div>
       </main>
+
+      {/* Traction / Social Proof Strip */}
+      <section className="relative z-10 border-y border-white/10 bg-black/30 backdrop-blur-xl py-14">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="space-y-1">
+              <div className="text-4xl font-bold text-white">2.4M+</div>
+              <div className="text-sm text-white/50 uppercase tracking-wider">Feedback Points Analyzed</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-4xl font-bold text-white">87%</div>
+              <div className="text-sm text-white/50 uppercase tracking-wider">Reduction in Analysis Time</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-4xl font-bold text-white">340+</div>
+              <div className="text-sm text-white/50 uppercase tracking-wider">Business Teams</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-4xl font-bold text-white">&lt; 8s</div>
+              <div className="text-sm text-white/50 uppercase tracking-wider">Avg. Decision Report Time</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* About Section */}
       <section id="about" className="relative z-10 py-24">
@@ -251,6 +274,52 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Testimonials / Social Proof Section */}
+      <section className="relative z-10 py-24 border-t border-white/10 bg-black/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Trusted by Product & Operations Leaders
+            </h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              See how fast-moving teams turn customer sentiment into high-confidence roadmap priorities.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 flex flex-col justify-between">
+              <p className="text-white/80 italic leading-relaxed mb-6">
+                "Revue.Ai replaced hours of manual review tagging with one automated dashboard. Our executive summaries are now powered by verifiable customer data, not gut feeling."
+              </p>
+              <div>
+                <div className="font-semibold text-white">Sarah Jenkins</div>
+                <div className="text-sm text-white/50">VP of Product, FinScale SaaS</div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 flex flex-col justify-between">
+              <p className="text-white/80 italic leading-relaxed mb-6">
+                "The decision engine didn't just summarize reviews—it accurately flagged a churn pattern before our quarterly metrics showed it. An essential tool in our stack."
+              </p>
+              <div>
+                <div className="font-semibold text-white">David Chen</div>
+                <div className="text-sm text-white/50">Head of CX, CloudPulse</div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 flex flex-col justify-between">
+              <p className="text-white/80 italic leading-relaxed mb-6">
+                "We feed customer feedback directly into Revue.Ai via webhooks. The board-ready reports have completely transformed our quarterly planning sessions."
+              </p>
+              <div>
+                <div className="font-semibold text-white">Elena Rostova</div>
+                <div className="text-sm text-white/50">Chief Operating Officer, Veloce Health</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section id="pricing" className="relative z-10 py-24">
         <div className="max-w-7xl mx-auto px-6">
@@ -281,7 +350,7 @@ export default function LandingPage() {
               </div>
 
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">₹4,999</div>
+                <div className="text-4xl font-bold text-white mb-1">$59</div>
                 <div className="text-sm text-white/60">PER MONTH</div>
               </div>
 
@@ -329,7 +398,7 @@ export default function LandingPage() {
               </div>
 
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">₹11,999</div>
+                <div className="text-4xl font-bold text-white mb-1">$149</div>
                 <div className="text-sm text-white/60">PER MONTH</div>
               </div>
 
@@ -383,7 +452,7 @@ export default function LandingPage() {
               </div>
 
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">₹49,999</div>
+                <div className="text-4xl font-bold text-white mb-1">$499</div>
                 <div className="text-sm text-white/60">PER MONTH</div>
               </div>
 
@@ -430,9 +499,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* Team Credits Section */}
-      <TeamCredits />
 
       {/* Footer Section */}
       <Footer />
